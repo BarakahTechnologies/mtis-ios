@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="MTIS es un inventario de herramientas privado y sin conexión para iPhone: fotos, números de serie y de inventario, fechas de garantía y calibración, historial de mantenimiento y valor. Sin cuenta, sin servidor." />
+  <meta name="theme-color" content="#1f6fd8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="180x180" href="assets/icon-180.png" />
+  <link rel="apple-touch-icon" href="assets/icon-180.png" />
+  <title>MTIS — Inventario de Herramientas</title>
+  <link rel="alternate" hreflang="en" href="https://m-t-i-s.github.io/iOS/index.html" />
+  <link rel="alternate" hreflang="es" href="https://m-t-i-s.github.io/iOS/index.es.html" />
+  <link rel="alternate" hreflang="ar" href="https://m-t-i-s.github.io/iOS/index.ar.html" />
+  <link rel="alternate" hreflang="x-default" href="https://m-t-i-s.github.io/iOS/index.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+/* MTIS website — shared styles for all pages (en / es / ar) */
+
+:root {
+  --accent: #1f6fd8;
+  --accent-dark: #175bb5;
+  --accent-soft: #e9f1fc;
+  --paper: #f3f5f8;
+  --ink: #10161c;
+  --muted: #5c6675;
+  --white: #ffffff;
+  --line: #e2e6ea;
+  --shadow: 0 18px 50px rgba(27, 32, 39, 0.13);
+  --radius: 22px;
+  --font-display: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--font-display); }
+
+.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+a:focus-visible, .button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---- nav ---- */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(244, 245, 247, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(226, 230, 234, 0.9);
+}
+.nav-inner { height: 66px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; font-size: 18px; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 9px;
+  object-fit: cover; display: block;
+  box-shadow: 0 6px 16px rgba(16, 22, 28, 0.28);
+}
+.nav-links { display: flex; align-items: center; gap: 22px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.nav-links > a:hover { color: var(--accent-dark); }
+
+/* ---- language switch ---- */
+.lang-switch { position: relative; overflow: visible; margin-inline-start: 4px; padding-inline-start: 16px; border-inline-start: 1px solid var(--line); }
+.lang-switch summary {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none;
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: #fff;
+  font-size: 13px; font-weight: 600; color: var(--muted);
+}
+.lang-switch summary::-webkit-details-marker { display: none; }
+.lang-switch summary::marker { content: ""; }
+.lang-switch summary:hover, .lang-switch[open] summary { color: var(--accent-dark); border-color: var(--accent); }
+.lang-menu {
+  position: absolute; inset-inline-end: 0; top: calc(100% + 8px); z-index: 60;
+  display: flex; flex-direction: column; gap: 2px; min-width: 158px;
+  background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 8px;
+}
+.lang-menu a { padding: 9px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--ink); }
+.lang-menu a:hover { background: var(--accent-soft); }
+.lang-menu a[aria-current="page"] { color: var(--accent-dark); font-weight: 700; background: var(--accent-soft); pointer-events: none; }
+
+/* ---- buttons ---- */
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 51px; padding: 0 24px; border-radius: 999px;
+  font-family: var(--font-body); font-size: 15px; font-weight: 600;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.button:hover { transform: translateY(-2px); }
+.button-primary { color: #fff; background: var(--accent); box-shadow: 0 12px 26px rgba(31, 111, 216, 0.30); }
+.button-primary:hover { background: var(--accent-dark); }
+.button-secondary { color: var(--ink); background: #fff; border: 1px solid var(--line); }
+
+/* ---- hero ---- */
+.hero { padding: 70px 0 46px; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 48px; }
+.hero-grid > * { min-width: 0; }
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent-dark);
+  font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em;
+  margin-bottom: 22px;
+}
+h1 { font-size: clamp(40px, 6.4vw, 66px); line-height: 1.02; letter-spacing: -0.045em; font-weight: 800; text-wrap: balance; }
+h1 span { color: var(--accent-dark); }
+.lead { font-size: clamp(16.5px, 1.9vw, 20px); color: var(--muted); margin-top: 22px; max-width: 46ch; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 30px; }
+.privacy-line { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 22px; color: var(--muted); font-size: 13.5px; font-weight: 500; }
+.privacy-line span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---- phone card ---- */
+.phone-card {
+  position: relative; background: var(--white); border: 1px solid var(--line);
+  border-radius: 34px; padding: 20px; box-shadow: var(--shadow);
+  max-width: 420px; margin-inline-start: auto;
+}
+.phone-screen { border-radius: 26px; background: linear-gradient(180deg, #ffffff, #f6f7f9); padding: 20px; border: 1px solid var(--line); }
+.screen-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.dash-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-dark); font-weight: 700; font-size: 12.5px; }
+.mini-meta { color: var(--muted); font-size: 12.5px; font-weight: 600; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.stat { border-radius: 16px; background: #fff; border: 1px solid var(--line); padding: 13px 14px; }
+.stat-label { font-size: 11.5px; color: var(--muted); font-weight: 600; letter-spacing: 0.02em; }
+.stat-value { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: -0.03em; margin-top: 3px; }
+.stat-value.alert { color: var(--accent-dark); }
+.attention { margin-top: 14px; border-radius: 18px; background: #0c1218; color: #fff; padding: 15px 16px; }
+.attention h3 { font-size: 13px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+.attention-row { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.12); padding: 9px 0; font-size: 12px; color: rgba(255,255,255,0.72); }
+.attention-row:first-of-type { border-top: 0; }
+.attention-row strong { color: #fff; font-weight: 600; white-space: nowrap; }
+.store-strip {
+  margin-top: 14px; display: flex; align-items: center; gap: 11px;
+  background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px;
+  font-size: 12.5px; color: var(--muted);
+}
+.store-strip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.store-strip strong { color: var(--ink); font-weight: 600; }
+
+/* ---- sections ---- */
+.section { padding: 70px 0; }
+.section-head { text-align: center; max-width: 640px; margin: 0 auto 34px; }
+.section-head h2 { font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; letter-spacing: -0.04em; font-weight: 800; }
+.section-head p { color: var(--muted); font-size: 16.5px; margin-top: 11px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.feature { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.feature-icon { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); font-size: 21px; margin-bottom: 16px; }
+.feature h3 { font-size: 17.5px; margin-bottom: 7px; letter-spacing: -0.02em; font-weight: 700; }
+.feature p { color: var(--muted); font-size: 14.5px; }
+
+/* ---- privacy panel ---- */
+.privacy-panel {
+  background: #0c1218; color: #fff; border-radius: 30px;
+  padding: clamp(30px, 5vw, 52px);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;
+  overflow: hidden; position: relative;
+}
+.privacy-panel::after {
+  content: ""; position: absolute; inset-inline-end: -130px; top: -130px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: rgba(31, 111, 216, 0.20);
+}
+.privacy-panel h2 { font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; letter-spacing: -0.04em; font-weight: 800; position: relative; z-index: 1; }
+.privacy-panel p { color: rgba(255,255,255,0.74); margin-top: 13px; font-size: 16.5px; position: relative; z-index: 1; }
+.privacy-list { display: grid; gap: 10px; position: relative; z-index: 1; }
+.privacy-item { display: flex; align-items: center; gap: 11px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.10); border-radius: 15px; padding: 13px 15px; font-weight: 500; font-size: 14.5px; }
+.privacy-item::before { content: "\2713"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+/* ---- cta ---- */
+.cta { text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 30px; padding: clamp(34px, 6vw, 62px); box-shadow: 0 14px 40px rgba(27,32,39,0.07); }
+.cta h2 { font-size: clamp(30px, 4.6vw, 50px); line-height: 1.05; letter-spacing: -0.045em; font-weight: 800; }
+.cta p { max-width: 52ch; margin: 13px auto 26px; color: var(--muted); font-size: 16.5px; }
+.cta .fine { margin-top: 18px; font-size: 13px; color: var(--muted); font-weight: 500; }
+
+/* ---- sub-page: header banner + content ---- */
+.page-header { background: #0c1218; color: #fff; padding: 44px 24px 40px; text-align: center; }
+.page-header h1 { font-size: clamp(28px, 5vw, 34px); font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+.page-header p { font-size: 15.5px; color: rgba(255,255,255,0.82); max-width: 60ch; margin-inline: auto; }
+
+.content { max-width: 760px; margin: 0 auto; padding: 46px 24px 80px; }
+.content .updated { font-size: 13px; color: var(--muted); margin-bottom: 30px; }
+
+.tl-dr { background: #fff; border: 1px solid var(--line); border-inline-start: 3px solid var(--accent); border-radius: 12px; padding: 20px 24px; margin-bottom: 40px; }
+.tl-dr h2 { font-size: 15px; font-weight: 700; color: var(--accent-dark); margin-bottom: 10px; }
+.tl-dr ul { padding-inline-start: 20px; }
+.tl-dr li { font-size: 14.5px; color: #3a4048; line-height: 1.7; }
+
+.content h2 { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin: 34px 0 11px; letter-spacing: -0.02em; }
+.content h2:first-of-type { margin-top: 0; }
+.content p { font-size: 14.5px; color: #3a4048; line-height: 1.7; margin-bottom: 11px; }
+.content ul { padding-inline-start: 22px; margin-bottom: 11px; }
+.content li { font-size: 14.5px; color: #3a4048; line-height: 1.7; }
+.content a { color: var(--accent-dark); }
+.content a:hover { text-decoration: underline; }
+.content code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.86em; background: #eceef1; border-radius: 4px; padding: 0.1em 0.35em; }
+
+/* ---- sub-page: support / faq ---- */
+.contact-card { max-width: 780px; margin: 0 auto; background: #fff; border: 1px solid var(--line); border-inline-start: 3px solid var(--accent); border-radius: 16px; padding: 24px 28px; }
+.contact-card h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.contact-card p { font-size: 14.5px; color: var(--muted); }
+.contact-card .links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
+.contact-card a { display: inline-flex; align-items: center; background: var(--accent); color: #fff; font-weight: 600; font-size: 13.5px; padding: 9px 18px; border-radius: 50px; }
+.contact-card a.ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.contact-card a:hover { background: var(--accent-dark); }
+.contact-card a.ghost:hover { background: #f4f5f7; }
+
+.faq { max-width: 780px; margin: 44px auto 0; }
+.faq > h2 { font-family: var(--font-display); font-size: 21px; font-weight: 800; margin-bottom: 18px; letter-spacing: -0.02em; }
+.faq-group { margin-bottom: 36px; }
+.faq-group h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--accent-dark); margin-bottom: 11px; }
+/* Scoped to .faq so these never touch the .lang-switch <details> in the nav. */
+.faq details { background: #fff; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
+.faq summary { padding: 15px 18px; font-size: 14.5px; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; font-size: 19px; font-weight: 400; color: var(--accent-dark); flex-shrink: 0; }
+.faq details[open] summary::after { content: '\2212'; }
+.faq-body { padding: 0 18px 15px; font-size: 13.5px; color: #3a4048; line-height: 1.7; }
+.faq-body p { margin-bottom: 8px; }
+.faq-body ul { padding-inline-start: 20px; }
+.faq-body li { margin-bottom: 4px; }
+.faq-body a { color: var(--accent-dark); }
+.faq-body a:hover { text-decoration: underline; }
+.faq-body strong { font-weight: 600; }
+
+/* ---- footer ---- */
+footer.site { padding: 34px 0; color: var(--muted); font-size: 13.5px; }
+footer.site .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; border-top: 1px solid var(--line); padding-top: 24px; }
+footer.site .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+footer.site .footer-links a:hover { color: var(--accent); }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .hero-grid, .privacy-panel { grid-template-columns: minmax(0, 1fr); }
+  .phone-card { margin: 0 auto; }
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .wrap { width: calc(100% - 28px); }
+  .nav-inner { height: auto; padding: 13px 0; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .nav-links { flex-wrap: wrap; gap: 14px 18px; }
+  .lang-switch { margin-inline-start: 0; padding-inline-start: 0; border-inline-start: 0; }
+  .lang-menu { inset-inline-end: auto; inset-inline-start: 0; }
+  .hero { padding-top: 46px; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .button { width: 100%; }
+  .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html" aria-label="MTIS home">
+        <img class="brand-mark" src="assets/icon-64.png" alt="MTIS app icon" width="34" height="34" />
+        <span>MTIS</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#features">Funciones</a>
+        <a href="#privacy">Privacidad</a>
+        <a href="support.es.html">Soporte</a>
+        <a href="privacy.es.html">Política</a>
+        <details class="lang-switch">
+          <summary aria-label="Change language">🌐 Español</summary>
+          <div class="lang-menu">
+            <a href="index.html" lang="en">English</a>
+            <a href="index.es.html" lang="es" aria-current="page">Español</a>
+            <a href="index.ar.html" lang="ar">العربية</a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="badge">Inventario de herramientas privado y sin conexión</div>
+          <h1>Cada herramienta que tienes, <span>bajo control.</span></h1>
+          <p class="lead">MTIS registra herramientas, fotos, números de serie y de inventario, fechas de garantía y calibración, historial de mantenimiento y el valor del inventario, todo en tu iPhone. Sin cuenta. Sin servidor.</p>
+          <div class="actions">
+            <!-- Replace href with the App Store URL once the app is live -->
+            <a class="button button-primary" href="#appstore">Muy pronto en el App&nbsp;Store</a>
+            <a class="button button-secondary" href="support.es.html">Obtener soporte</a>
+          </div>
+          <div class="privacy-line" aria-label="Highlights">
+            <span>🔒 Sin cuenta</span>
+            <span>📴 Funciona sin conexión</span>
+            <span>🚫 Sin rastreo</span>
+          </div>
+        </div>
+        <aside class="phone-card" aria-label="MTIS app preview">
+          <div class="phone-screen">
+            <div class="screen-header">
+              <span class="dash-pill">🔧 Panel</span>
+              <span class="mini-meta">21 herramientas</span>
+            </div>
+            <div class="stat-grid">
+              <div class="stat"><div class="stat-label">Herramientas</div><div class="stat-value">21</div></div>
+              <div class="stat"><div class="stat-label">Valor</div><div class="stat-value">$4,180</div></div>
+              <div class="stat"><div class="stat-label">Cal. vencida</div><div class="stat-value alert">2</div></div>
+              <div class="stat"><div class="stat-label">Garantía 30 d</div><div class="stat-value alert">1</div></div>
+            </div>
+            <div class="attention">
+              <h3>Requiere atención</h3>
+              <div class="attention-row"><span>Llave dinamométrica 1/2"</span><strong>Calibración vencida</strong></div>
+              <div class="attention-row"><span>Llave de impacto 3/8"</span><strong>Garantía por vencer</strong></div>
+              <div class="attention-row"><span>Juego de 27 puntas</span><strong>24 de 27 piezas</strong></div>
+            </div>
+            <div class="store-strip">
+              <span class="dot" aria-hidden="true"></span>
+              <span><strong>Muy pronto</strong> en el App&nbsp;Store.</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Hecho para quien es dueño de las herramientas.</h2>
+          <p>Rápido de registrar, claro de buscar y honesto sobre cuánto vale todo.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="feature-icon">🔧</div>
+            <h3>Fichas de herramienta</h3>
+            <p>Foto, marca, modelo, número de serie y de inventario, costo, estado y ubicación de cada herramienta que tienes.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">📅</div>
+            <h3>Calibración y garantía</h3>
+            <p>Define fechas de vencimiento y MTIS avisa lo que está vencido o vence en 30 días, en el panel.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">🧰</div>
+            <h3>Cajas y juegos</h3>
+            <p>Organiza por cofre, gabinete, cajón o bin de camión —con anidamiento— y controla las piezas de cada juego.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">🔎</div>
+            <h3>Escanear para encontrar</h3>
+            <p>Fotografía una etiqueta para leer el número de pieza, o escanea un QR/código de barras para ir directo a una herramienta.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">📄</div>
+            <h3>Informes y exportación</h3>
+            <p>Exportación CSV, lista de inventario en PDF, un documento para reclamo de seguro con fotos y valores, y una estimación de depreciación.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">💾</div>
+            <h3>Copia de seguridad y auditoría</h3>
+            <p>Respalda todo tu inventario en un archivo y realiza un recorrido guiado para confirmar que no falta nada.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="section">
+      <div class="wrap">
+        <div class="privacy-panel">
+          <div>
+            <h2>Tu inventario es tuyo.</h2>
+            <p>MTIS no tiene cuenta ni servidor. Todo lo que ingresas vive en tu dispositivo; nada se sube, nunca.</p>
+          </div>
+          <div class="privacy-list">
+            <div class="privacy-item">Sin cuenta, sin registro</div>
+            <div class="privacy-item">Sin servidor: nada sale de tu dispositivo</div>
+            <div class="privacy-item">Sin anuncios, sin analíticas, sin rastreo</div>
+            <div class="privacy-item">CSV, PDF y copias solo cuando tú las exportas</div>
+            <div class="privacy-item">Bloqueo opcional con Face ID / Touch ID</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="cta">
+          <h2>Configura tu inventario una vez.</h2>
+          <p>Agrega tus herramientas, toma una foto de cada una y deja que MTIS controle qué vence, qué tiene garantía y cuánto vale todo.</p>
+          <div class="actions" style="justify-content:center;">
+            <a class="button button-primary" href="#appstore">Muy pronto en el App&nbsp;Store</a>
+            <a class="button button-secondary" href="mailto:mtis-app@proton.me">Contactar soporte</a>
+          </div>
+          <p class="fine">Prueba gratis de 3 días · pago único de $4.99 · sin suscripción</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site">
+    <div class="wrap footer-inner">
+      <p>© 2026 AbdurRahman Rozell. Todos los derechos reservados.</p>
+      <div class="footer-links">
+        <a href="privacy.es.html">Política de Privacidad</a>
+        <a href="support.es.html">Soporte</a>
+        <a href="https://github.com/M-T-I-S/iOS" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

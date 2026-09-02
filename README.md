@@ -40,10 +40,12 @@ backup. No account, no server, no tracking.
 
 Free 3-day trial, then a one-time $4.99 purchase. No subscription.
 
-**Contact:** mtis-app@proton.me · https://github.com/M-T-I-S/iOS/issues
+**Contact:** mtis-app@proton.me
 **© 2026 AbdurRahman Rozell**
 
 ## Before publishing
+
+MTIS is a closed-source app — this repo holds the website only.
 
 - Replace the `#appstore` placeholder links with the real App Store URL once
   the app is live — two per `index*.html` (hero and CTA), plus the

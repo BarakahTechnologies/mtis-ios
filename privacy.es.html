@@ -293,7 +293,7 @@ footer.site .footer-links a:hover { color: var(--accent); }
   <p>Versión corta: nada de lo que ingresas sale de tu dispositivo.</p>
 </div>
 <div class="content">
-  <p class="updated">Última actualización: 28 de agosto de 2026</p>
+  <p class="updated">Última actualización: 2 de septiembre de 2026</p>
   <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Traducción de cortesía. En caso de discrepancia, prevalece la versión en inglés.</p>
   <div class="tl-dr">
     <h2>La versión corta</h2>
@@ -307,32 +307,34 @@ footer.site .footer-links a:hover { color: var(--accent); }
     </ul>
   </div>
   <h2>1. Quiénes somos</h2>
-  <p>MTIS (Mechanic Tool Inventory System, “la app”) es desarrollada y publicada por AbdurRahman Rozell. Para consultas sobre esta política, escribe a <a href="mailto:mtis-app@proton.me">mtis-app@proton.me</a> o abre un issue en <a href="https://github.com/M-T-I-S/iOS/issues" target="_blank" rel="noopener">github.com/M-T-I-S/iOS/issues</a>.</p>
+  <p>MTIS (Mechanic Tool Inventory System, “la app”) es desarrollada y publicada por AbdurRahman Rozell. Para consultas sobre esta política, escribe a <a href="mailto:mtis-app@proton.me">mtis-app@proton.me</a>.</p>
   <h2>2. Qué datos guarda la app</h2>
-  <p>MTIS guarda únicamente la información que tú ingresas sobre tus herramientas y equipos. Esto puede incluir:</p><ul><li><strong>Datos de la herramienta:</strong> nombre, marca, modelo, número de serie, número de inventario, categoría, tamaño, material, rango de torque, cantidad, estado, ubicación, proveedor, fecha de compra, costo, fechas de garantía y calibración, y notas</li><li><strong>Fotos</strong> que adjuntas a una herramienta, desde la cámara o la fototeca</li><li><strong>Registros de mantenimiento:</strong> fecha del servicio, descripción y costo</li><li><strong>Cajas de herramientas:</strong> nombre, tipo, marca, SKU, costo, fecha de compra y cómo se anidan</li><li><strong>Preferencias de la app:</strong> idioma, ajuste de bloqueo, orden y opciones similares</li></ul><p>Todo esto lo ingresas tú y permanece por completo bajo tu control.</p>
+  <p>MTIS guarda únicamente la información que tú ingresas sobre tus herramientas y equipos. Esto puede incluir:</p><ul><li><strong>Datos de la herramienta:</strong> nombre, marca, modelo, número de serie, número de inventario, categoría y subcategoría, tamaño, material, rango de torque, cantidad, estado, ubicación, proveedor, fecha de compra, costo, valor de reemplazo, fechas de garantía y calibración, un intervalo de inspección y notas</li><li><strong>Fotos</strong> que adjuntas a una herramienta, desde la cámara o la fototeca, y una etiqueta opcional para cada una (placa de serie, recibo, foto del estado, etc.)</li><li><strong>Registros de préstamo:</strong> si prestas una herramienta, el nombre que escribes para quien la recibe y las fechas de préstamo y de devolución</li><li><strong>Historial de la herramienta:</strong> un registro en el dispositivo de revisiones de cajón, cambios de estado y préstamos, cada uno con fecha y una nota o foto opcional</li><li><strong>Registros de mantenimiento:</strong> fecha del servicio, descripción y costo</li><li><strong>Cajas de herramientas:</strong> nombre, tipo, marca, SKU, costo, fecha de compra y cómo se anidan</li><li><strong>Preferencias de la app:</strong> idioma, apariencia, ajuste de bloqueo, orden y opciones similares</li></ul><p>Todo esto lo ingresas tú y permanece por completo bajo tu control. El nombre de quien recibe el préstamo es texto libre que tú eliges escribir; si prefieres no registrar el nombre de una persona, usa iniciales o una etiqueta.</p>
   <h2>3. Dónde se guardan los datos</h2>
   <p>Todos los datos se guardan localmente en tu dispositivo: los registros en el framework SwiftData de Apple y los archivos de fotos en el contenedor privado de la app. MTIS <strong>no</strong> usa iCloud, CloudKit ni ningún servicio de sincronización, y <strong>no</strong> opera ningún servidor de aplicación, base de datos en la nube ni API. Tus datos existen solo en los dispositivos donde tú los pones.</p>
   <h2>4. Copias de seguridad y exportaciones</h2>
   <p>MTIS puede generar archivos CSV, informes PDF (inventario, documentación de seguro, estimación de depreciación), hojas de etiquetas QR imprimibles y un archivo único de copia de seguridad de todo tu inventario. Estos se crean solo cuando pulsas Exportar, Imprimir o Copia de seguridad, y salen de tu dispositivo únicamente mediante la acción de compartir de iOS que <em>tú</em> elijas: Archivos, Mail, Mensajes, AirDrop, etc. MTIS nunca los transmite a ningún sitio por su cuenta.</p>
   <h2>5. Cámara y fototeca</h2>
-  <p>El acceso a la cámara y a la fototeca se usa solo para adjuntar una foto a una herramienta o para reconocer texto de una etiqueta con el framework Vision de Apple, en el dispositivo (por ejemplo, para leer un número de serie). Las imágenes y el texto reconocido se procesan en tu dispositivo y nunca se suben.</p>
-  <h2>6. Face ID, Touch ID y código</h2>
+  <p>El acceso a la cámara y a la fototeca se usa solo para adjuntar una foto a una herramienta o para leer texto o un código de barras de una etiqueta con el framework Vision de Apple, en el dispositivo (por ejemplo, para capturar un número de serie o buscar una pieza). Las imágenes, el texto reconocido y los códigos escaneados se procesan en tu dispositivo y nunca se suben.</p>
+  <h2>6. Siri y Atajos</h2>
+  <p>Si usas Siri o la app Atajos, MTIS puede responder preguntas como «dónde está mi llave dinamométrica» leyendo la ubicación de una herramienta, su estado y —si la has prestado— el nombre que ingresaste de quien la tiene, y devolviendo eso en el resultado hablado o en pantalla. También puede abrir la app en una nueva ficha de herramienta o en una revisión de cajón. Estas acciones se ejecutan en tu dispositivo con tus datos locales. Cómo procesa Siri tu solicitud hablada lo controlan los ajustes de Siri y Buscar de tu dispositivo y la política de privacidad de Apple, no MTIS.</p>
+  <h2>7. Face ID, Touch ID y código</h2>
   <p>MTIS ofrece un bloqueo opcional, desactivado por defecto. Cuando se activa, requiere Face ID, Touch ID o el código del dispositivo para abrir la app después de que haya estado en segundo plano. La autenticación la gestiona por completo el framework LocalAuthentication de Apple; MTIS nunca recibe ni guarda datos biométricos.</p>
-  <h2>7. Compra dentro de la app</h2>
+  <h2>8. Compra dentro de la app</h2>
   <p>Tras una prueba gratuita de 3 días, MTIS requiere una compra única para seguir usándose. La compra la procesa por completo el App Store de Apple. MTIS no recopila, ve ni guarda información de pago. Apple puede procesar datos relacionados con la compra según su propia política de privacidad.</p>
-  <h2>8. Sin rastreo ni publicidad</h2>
+  <h2>9. Sin rastreo ni publicidad</h2>
   <p>MTIS no incluye ningún SDK de publicidad, ningún SDK de analítica ni ninguna librería de rastreo de terceros. No usa el identificador de publicidad (IDFA) y no crea un perfil de ti ni de tu uso.</p>
-  <h2>9. Uso de red</h2>
+  <h2>10. Uso de red</h2>
   <p>MTIS no realiza ninguna conexión de red salvo con el App Store de Apple para la compra única y para restaurar una compra anterior. No hay servicio de informes de fallos, ni configuración remota, ni ningún tipo de “llamada a casa”.</p>
-  <h2>10. Divulgación de APIs de motivo requerido</h2>
+  <h2>11. Divulgación de APIs de motivo requerido</h2>
   <p>Conforme a los requisitos del manifiesto de privacidad de Apple, MTIS declara que accede a marcas de tiempo de archivos (para leer y escribir sus propios datos y archivos de exportación), al espacio en disco (para comprobar la capacidad antes de una copia de seguridad) y a <code>UserDefaults</code> (para guardar tus preferencias locales). Nada de esta información se recopila ni se transmite.</p>
-  <h2>11. Eliminación de datos</h2>
+  <h2>12. Eliminación de datos</h2>
   <p>Para eliminar todos tus datos, borra MTIS de tu iPhone o iPad. Como no hay nada guardado en un servidor ni en iCloud, quitar la app lo elimina todo. También puedes borrar herramientas, cajas y registros individuales en cualquier momento dentro de la app.</p>
-  <h2>12. Privacidad de menores</h2>
+  <h2>13. Privacidad de menores</h2>
   <p>MTIS es una herramienta para profesionales de oficios, técnicos y aficionados. No está dirigida a menores, no recopila conscientemente datos de nadie de forma directa y no se conecta a ningún servicio en línea que lo haría.</p>
-  <h2>13. Cambios en esta política</h2>
+  <h2>14. Cambios en esta política</h2>
   <p>Si hacemos cambios importantes, actualizaremos la fecha en la parte superior de esta página. La política vigente siempre está disponible en esta URL.</p>
-  <h2>14. Contacto</h2>
+  <h2>15. Contacto</h2>
   <p>¿Preguntas o inquietudes sobre privacidad? Escribe a <a href="mailto:mtis-app@proton.me">mtis-app@proton.me</a>.</p>
 </div>
   <footer class="site">
@@ -341,7 +343,6 @@ footer.site .footer-links a:hover { color: var(--accent); }
       <div class="footer-links">
         <a href="privacy.es.html">Política de Privacidad</a>
         <a href="support.es.html">Soporte</a>
-        <a href="https://github.com/M-T-I-S/iOS" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>

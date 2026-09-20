@@ -2,8 +2,9 @@
 """Generate the MTIS website: index / privacy / support in en, es, ar."""
 import os
 
-OUT = "/Users/locutus/Public/mtis-project/website"
-BASE = "https://m-t-i-s.github.io/iOS"
+BUILD_DIR = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.dirname(BUILD_DIR)
+BASE = "https://mtis.barakahtechnologies.net"
 LANGS = ["en", "es", "ar"]
 RTL = {"ar"}
 
@@ -13,19 +14,19 @@ UI = {
         native="English", dir="ltr",
         nav_features="Features", nav_privacy="Privacy", nav_support="Support", nav_policy="Policy",
         f_privacy_policy="Privacy Policy", f_support="Support",
-        copyright="© 2026 AbdurRahman Rozell. All rights reserved.",
+        copyright="© 2026 BARAKAH TECHNOLOGIES, INC. All rights reserved.",
     ),
     "es": dict(
         native="Español", dir="ltr",
         nav_features="Funciones", nav_privacy="Privacidad", nav_support="Soporte", nav_policy="Política",
         f_privacy_policy="Política de Privacidad", f_support="Soporte",
-        copyright="© 2026 AbdurRahman Rozell. Todos los derechos reservados.",
+        copyright="© 2026 BARAKAH TECHNOLOGIES, INC. Todos los derechos reservados.",
     ),
     "ar": dict(
         native="العربية", dir="rtl",
         nav_features="الميزات", nav_privacy="الخصوصية", nav_support="الدعم", nav_policy="السياسة",
         f_privacy_policy="سياسة الخصوصية", f_support="الدعم",
-        copyright="© 2026 AbdurRahman Rozell. جميع الحقوق محفوظة.",
+        copyright="© 2026 BARAKAH TECHNOLOGIES, INC. جميع الحقوق محفوظة.",
     ),
 }
 
@@ -53,6 +54,7 @@ def head(page, lang, title, desc):
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
   <link rel="icon" type="image/png" sizes="180x180" href="assets/icon-180.png" />
   <link rel="apple-touch-icon" href="assets/icon-180.png" />
+  <link rel="canonical" href="{BASE}/{fname(page, lang)}" />
   <title>{title}</title>
 {alts}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,10 +70,13 @@ def nav(page, lang, home_anchor=True):
     u = UI[lang]
     feat = "#features" if page == "index" else "index.html#features"
     priv = "#privacy" if page == "index" else "index.html#privacy"
-    menu = "\n".join(
-        f'            <a href="{fname(page, l)}" lang="{l}"{" aria-current=\"page\"" if l == lang else ""}>{UI[l]["native"]}</a>'
-        for l in LANGS
-    )
+    menu_lines = []
+    for l in LANGS:
+        current = ' aria-current="page"' if l == lang else ""
+        menu_lines.append(
+            f'            <a href="{fname(page, l)}" lang="{l}"{current}>{UI[l]["native"]}</a>'
+        )
+    menu = "\n".join(menu_lines)
     return f"""  <header class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html" aria-label="MTIS home">
@@ -298,7 +303,7 @@ def build_index(lang):
           <p>{d['cta_p']}</p>
           <div class="actions" style="justify-content:center;">
             <a class="button button-primary" href="#appstore">{d['btn_store']}</a>
-            <a class="button button-secondary" href="mailto:mtis-app@proton.me">{d['cta_btn2']}</a>
+            <a class="button button-secondary" href="mailto:support@barakahtechnologies.net">{d['cta_btn2']}</a>
           </div>
           <p class="fine">{d['fine']}</p>
         </div>
@@ -314,7 +319,7 @@ PV = {
   title="Privacy Policy — MTIS",
   desc="MTIS privacy policy. Every tool, photo, and note stays on your device. No account, no server, no tracking.",
   h="Privacy Policy", sub="Short version: nothing you enter ever leaves your device.",
-  updated="Last updated: September 4, 2026",
+  updated="Last updated: September 20, 2026",
   tldr_h="The short version",
   tldr=["MTIS has no account, no login, and no sign-up.",
         "Every tool, photo, and note is stored only on your iPhone or iPad.",
@@ -323,7 +328,7 @@ PV = {
         "Files leave the device only when you explicitly export or share them.",
         "Delete the app to erase all of its data."],
   sections=[
-   ("1. Who we are", "<p>MTIS (Mechanic Tool Inventory System, “the app”) is developed and published by AbdurRahman Rozell. For questions about this policy, email <a href=\"mailto:mtis-app@proton.me\">mtis-app@proton.me</a>.</p>"),
+   ("1. Who we are", "<p>MTIS (Mechanic Tool Inventory System, “the app”) is developed and published by BARAKAH TECHNOLOGIES, INC. For questions about this policy, email <a href=\"mailto:support@barakahtechnologies.net\">support@barakahtechnologies.net</a>.</p>"),
    ("2. What data the app stores", "<p>MTIS stores only the information you enter about your tools and equipment. This may include:</p><ul><li><strong>Tool details:</strong> name, brand, model, serial number, stock/asset number, category and subcategory, size, material, torque range, quantity, condition, location, vendor, purchase date, cost, replacement value, warranty and calibration dates, an inspection interval, and notes</li><li><strong>Photos</strong> you attach to a tool, from your camera or photo library, and an optional label for each (serial plate, receipt, condition shot, and so on)</li><li><strong>Loan records:</strong> if you lend a tool, the name you type for the borrower and the loan and due-back dates</li><li><strong>Tool history:</strong> an on-device log of drawer checks, condition changes, and loans — each with a date and an optional note or photo</li><li><strong>Maintenance log entries:</strong> service date, description, and cost</li><li><strong>Toolboxes:</strong> name, type, brand, SKU, cost, purchase date, and how they nest</li><li><strong>App preferences:</strong> language choice, appearance, the app-lock setting, sort order, and similar options</li></ul><p>All of this is entered by you and stays entirely under your control. The borrower name is free text you choose to type; if you would rather not record a person’s name, use initials or a label instead.</p>"),
    ("3. Where data is stored", "<p>All data is stored locally on your device: structured records in Apple’s SwiftData framework, and photo files in the app’s private container. MTIS does <strong>not</strong> use iCloud, CloudKit, or any sync service, and it does <strong>not</strong> operate an application server, cloud database, or backend API. Your data exists only on the devices you put it on.</p>"),
    ("4. Backups and exports", "<p>MTIS can produce CSV files, PDF reports (inventory, insurance documentation, depreciation estimate), printable QR-label sheets, and a single-file backup archive of your whole inventory. These are created only when you tap Export, Print, or Backup, and they leave your device only through the iOS share sheet action <em>you</em> choose — Files, Mail, Messages, AirDrop, and so on. MTIS never transmits them anywhere on its own.</p>"),
@@ -337,14 +342,14 @@ PV = {
    ("12. Data deletion", "<p>To delete all your data, delete MTIS from your iPhone or iPad. Because nothing is stored on a server or in iCloud, removing the app removes everything. You can also delete individual tools, toolboxes, and log entries at any time inside the app.</p>"),
    ("13. Children’s privacy", "<p>MTIS is a tool for tradespeople, technicians, and hobbyists. It is not directed at children, does not knowingly collect data from anyone directly, and connects to no online service that would.</p>"),
    ("14. Changes to this policy", "<p>If we make material changes, we will update the date at the top of this page. The current policy is always available at this URL.</p>"),
-   ("15. Contact", "<p>Questions or concerns about privacy? Email <a href=\"mailto:mtis-app@proton.me\">mtis-app@proton.me</a>.</p>"),
+   ("15. Contact", "<p>Questions or concerns about privacy? Email <a href=\"mailto:support@barakahtechnologies.net\">support@barakahtechnologies.net</a>.</p>"),
   ],
  ),
  "es": dict(
   title="Política de Privacidad — MTIS",
   desc="Política de privacidad de MTIS. Cada herramienta, foto y nota permanece en tu dispositivo. Sin cuenta, sin servidor, sin rastreo.",
   h="Política de Privacidad", sub="Versión corta: nada de lo que ingresas sale de tu dispositivo.",
-  updated="Última actualización: 4 de septiembre de 2026",
+  updated="Última actualización: 20 de septiembre de 2026",
   tldr_h="La versión corta",
   tldr=["MTIS no tiene cuenta, ni inicio de sesión, ni registro.",
         "Cada herramienta, foto y nota se guarda únicamente en tu iPhone o iPad.",
@@ -353,7 +358,7 @@ PV = {
         "Los archivos salen del dispositivo solo cuando tú los exportas o compartes explícitamente.",
         "Elimina la app para borrar todos sus datos."],
   sections=[
-   ("1. Quiénes somos", "<p>MTIS (Mechanic Tool Inventory System, “la app”) es desarrollada y publicada por AbdurRahman Rozell. Para consultas sobre esta política, escribe a <a href=\"mailto:mtis-app@proton.me\">mtis-app@proton.me</a>.</p>"),
+   ("1. Quiénes somos", "<p>MTIS (Mechanic Tool Inventory System, “la app”) es desarrollada y publicada por BARAKAH TECHNOLOGIES, INC. Para consultas sobre esta política, escribe a <a href=\"mailto:support@barakahtechnologies.net\">support@barakahtechnologies.net</a>.</p>"),
    ("2. Qué datos guarda la app", "<p>MTIS guarda únicamente la información que tú ingresas sobre tus herramientas y equipos. Esto puede incluir:</p><ul><li><strong>Datos de la herramienta:</strong> nombre, marca, modelo, número de serie, número de inventario, categoría y subcategoría, tamaño, material, rango de torque, cantidad, estado, ubicación, proveedor, fecha de compra, costo, valor de reemplazo, fechas de garantía y calibración, un intervalo de inspección y notas</li><li><strong>Fotos</strong> que adjuntas a una herramienta, desde la cámara o la fototeca, y una etiqueta opcional para cada una (placa de serie, recibo, foto del estado, etc.)</li><li><strong>Registros de préstamo:</strong> si prestas una herramienta, el nombre que escribes para quien la recibe y las fechas de préstamo y de devolución</li><li><strong>Historial de la herramienta:</strong> un registro en el dispositivo de revisiones de cajón, cambios de estado y préstamos, cada uno con fecha y una nota o foto opcional</li><li><strong>Registros de mantenimiento:</strong> fecha del servicio, descripción y costo</li><li><strong>Cajas de herramientas:</strong> nombre, tipo, marca, SKU, costo, fecha de compra y cómo se anidan</li><li><strong>Preferencias de la app:</strong> idioma, apariencia, ajuste de bloqueo, orden y opciones similares</li></ul><p>Todo esto lo ingresas tú y permanece por completo bajo tu control. El nombre de quien recibe el préstamo es texto libre que tú eliges escribir; si prefieres no registrar el nombre de una persona, usa iniciales o una etiqueta.</p>"),
    ("3. Dónde se guardan los datos", "<p>Todos los datos se guardan localmente en tu dispositivo: los registros en el framework SwiftData de Apple y los archivos de fotos en el contenedor privado de la app. MTIS <strong>no</strong> usa iCloud, CloudKit ni ningún servicio de sincronización, y <strong>no</strong> opera ningún servidor de aplicación, base de datos en la nube ni API. Tus datos existen solo en los dispositivos donde tú los pones.</p>"),
    ("4. Copias de seguridad y exportaciones", "<p>MTIS puede generar archivos CSV, informes PDF (inventario, documentación de seguro, estimación de depreciación), hojas de etiquetas QR imprimibles y un archivo único de copia de seguridad de todo tu inventario. Estos se crean solo cuando pulsas Exportar, Imprimir o Copia de seguridad, y salen de tu dispositivo únicamente mediante la acción de compartir de iOS que <em>tú</em> elijas: Archivos, Mail, Mensajes, AirDrop, etc. MTIS nunca los transmite a ningún sitio por su cuenta.</p>"),
@@ -367,14 +372,14 @@ PV = {
    ("12. Eliminación de datos", "<p>Para eliminar todos tus datos, borra MTIS de tu iPhone o iPad. Como no hay nada guardado en un servidor ni en iCloud, quitar la app lo elimina todo. También puedes borrar herramientas, cajas y registros individuales en cualquier momento dentro de la app.</p>"),
    ("13. Privacidad de menores", "<p>MTIS es una herramienta para profesionales de oficios, técnicos y aficionados. No está dirigida a menores, no recopila conscientemente datos de nadie de forma directa y no se conecta a ningún servicio en línea que lo haría.</p>"),
    ("14. Cambios en esta política", "<p>Si hacemos cambios importantes, actualizaremos la fecha en la parte superior de esta página. La política vigente siempre está disponible en esta URL.</p>"),
-   ("15. Contacto", "<p>¿Preguntas o inquietudes sobre privacidad? Escribe a <a href=\"mailto:mtis-app@proton.me\">mtis-app@proton.me</a>.</p>"),
+   ("15. Contacto", "<p>¿Preguntas o inquietudes sobre privacidad? Escribe a <a href=\"mailto:support@barakahtechnologies.net\">support@barakahtechnologies.net</a>.</p>"),
   ],
  ),
  "ar": dict(
   title="سياسة الخصوصية — MTIS",
   desc="سياسة خصوصية MTIS. كل أداة وصورة وملاحظة تبقى على جهازك. بلا حساب، بلا خادم، بلا تتبّع.",
   h="سياسة الخصوصية", sub="باختصار: لا شيء مما تُدخله يغادر جهازك.",
-  updated="آخر تحديث: ٤ سبتمبر ٢٠٢٦",
+  updated="آخر تحديث: ٢٠ سبتمبر ٢٠٢٦",
   tldr_h="النسخة المختصرة",
   tldr=["‏MTIS بلا حساب وبلا تسجيل دخول وبلا اشتراك.",
         "كل أداة وصورة وملاحظة تُحفظ فقط على iPhone أو iPad الخاص بك.",
@@ -383,7 +388,7 @@ PV = {
         "لا تغادر الملفات جهازك إلا عندما تصدّرها أو تشاركها أنت صراحةً.",
         "احذف التطبيق لمسح كل بياناته."],
   sections=[
-   ("١. من نحن", "<p>‏MTIS (نظام جرد أدوات الميكانيكي، “التطبيق”) طوّره ونشره AbdurRahman Rozell. للأسئلة حول هذه السياسة، راسل <a href=\"mailto:mtis-app@proton.me\">mtis-app@proton.me</a>.</p>"),
+   ("١. من نحن", "<p>‏MTIS (نظام جرد أدوات الميكانيكي، “التطبيق”) تطوّره وتنشره BARAKAH TECHNOLOGIES, INC. للأسئلة حول هذه السياسة، راسل <a href=\"mailto:support@barakahtechnologies.net\">support@barakahtechnologies.net</a>.</p>"),
    ("٢. ما البيانات التي يحفظها التطبيق", "<p>يحفظ MTIS فقط المعلومات التي تُدخلها عن أدواتك ومعداتك. قد تشمل:</p><ul><li><strong>تفاصيل الأداة:</strong> الاسم والعلامة التجارية والطراز والرقم التسلسلي ورقم المخزون والفئة والفئة الفرعية والمقاس والخامة ونطاق العزم والكمية والحالة والموقع والمورّد وتاريخ الشراء والتكلفة وقيمة الاستبدال وتواريخ الضمان والمعايرة وفترة الفحص والملاحظات</li><li><strong>الصور</strong> التي ترفقها بأداة، من الكاميرا أو مكتبة الصور، وتصنيف اختياري لكل صورة (لوحة الرقم التسلسلي، إيصال، صورة الحالة، وغيرها)</li><li><strong>سجلات الإعارة:</strong> إذا أعرتَ أداة، الاسم الذي تكتبه للمستعير وتاريخا الإعارة والإرجاع</li><li><strong>سجل الأداة:</strong> سجل على الجهاز لعمليات فحص الأدراج وتغييرات الحالة والإعارات، لكل منها تاريخ وملاحظة أو صورة اختيارية</li><li><strong>سجلات الصيانة:</strong> تاريخ الخدمة والوصف والتكلفة</li><li><strong>صناديق الأدوات:</strong> الاسم والنوع والعلامة التجارية ورمز المنتج والتكلفة وتاريخ الشراء وطريقة تداخلها</li><li><strong>تفضيلات التطبيق:</strong> اختيار اللغة والمظهر وإعداد القفل وترتيب الفرز وخيارات مشابهة</li></ul><p>كل هذا تُدخله أنت ويبقى بالكامل تحت سيطرتك. اسم المستعير نص حر تختار كتابته؛ وإذا كنت تفضّل عدم تسجيل اسم شخص، فاستخدم الأحرف الأولى أو تصنيفاً بدلاً من ذلك.</p>"),
    ("٣. أين تُحفظ البيانات", "<p>تُحفظ كل البيانات محلياً على جهازك: السجلات المنظّمة في إطار عمل SwiftData من Apple، وملفات الصور في حاوية التطبيق الخاصة. لا يستخدم MTIS <strong>إطلاقاً</strong> iCloud أو CloudKit أو أي خدمة مزامنة، ولا يُشغّل <strong>أي</strong> خادم تطبيقات أو قاعدة بيانات سحابية أو واجهة برمجية. بياناتك موجودة فقط على الأجهزة التي تضعها عليها.</p>"),
    ("٤. النسخ الاحتياطية والتصدير", "<p>يمكن لـ MTIS إنشاء ملفات CSV وتقارير PDF (جرد، وثائق تأمين، تقدير إهلاك) وأوراق ملصقات QR قابلة للطباعة وأرشيف نسخة احتياطية بملف واحد لجردك بالكامل. تُنشأ هذه فقط عند الضغط على تصدير أو طباعة أو نسخ احتياطي، ولا تغادر جهازك إلا عبر إجراء المشاركة في iOS الذي <em>تختاره أنت</em> — الملفات أو Mail أو الرسائل أو AirDrop وغيرها. لا يرسلها MTIS إلى أي مكان من تلقاء نفسه.</p>"),
@@ -397,7 +402,7 @@ PV = {
    ("١٢. حذف البيانات", "<p>لحذف كل بياناتك، احذف MTIS من iPhone أو iPad الخاص بك. ولأن لا شيء محفوظ على خادم أو في iCloud، فإن إزالة التطبيق تزيل كل شيء. يمكنك أيضاً حذف أدوات وصناديق وسجلات مفردة في أي وقت داخل التطبيق.</p>"),
    ("١٣. خصوصية الأطفال", "<p>‏MTIS أداة للحرفيين والفنيين والهواة. وهو غير موجَّه للأطفال، ولا يجمع بيانات من أي شخص مباشرةً عن علم، ولا يتصل بأي خدمة عبر الإنترنت تفعل ذلك.</p>"),
    ("١٤. التغييرات على هذه السياسة", "<p>إذا أجرينا تغييرات جوهرية، فسنحدّث التاريخ أعلى هذه الصفحة. السياسة الحالية متاحة دائماً على هذا الرابط.</p>"),
-   ("١٥. التواصل", "<p>أسئلة أو مخاوف بشأن الخصوصية؟ راسل <a href=\"mailto:mtis-app@proton.me\">mtis-app@proton.me</a>.</p>"),
+   ("١٥. التواصل", "<p>أسئلة أو مخاوف بشأن الخصوصية؟ راسل <a href=\"mailto:support@barakahtechnologies.net\">support@barakahtechnologies.net</a>.</p>"),
   ],
  ),
 }
@@ -411,8 +416,10 @@ def build_privacy(lang):
         note = '<p style="font-size:13px;color:var(--muted);margin-bottom:24px;">' + (
           "Traducción de cortesía. En caso de discrepancia, prevalece la versión en inglés." if lang == "es"
           else "ترجمة مقدَّمة للتيسير. عند وجود اختلاف، تُعتمد النسخة الإنجليزية.") + '</p>'
+    platform = {"en": "Apple platforms · iPhone and iPad", "es": "Plataformas Apple · iPhone y iPad", "ar": "منصات Apple · iPhone وiPad"}[lang]
     return head("privacy", lang, d["title"], d["desc"]) + "\n" + nav("privacy", lang) + f"""
 <div class="page-header">
+  <p><strong>{platform}</strong></p>
   <h1>{d['h']}</h1>
   <p>{d['sub']}</p>
 </div>
@@ -589,7 +596,7 @@ def build_support(lang):
     <h2>{d['cc_h']}</h2>
     <p>{d['cc_p']}</p>
     <div class="links">
-      <a href="mailto:mtis-app@proton.me">mtis-app@proton.me</a>
+      <a href="mailto:support@barakahtechnologies.net">support@barakahtechnologies.net</a>
     </div>
   </div>
 

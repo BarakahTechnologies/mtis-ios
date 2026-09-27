@@ -22,6 +22,14 @@
 /* MTIS website — shared styles for all pages (en / es / ar) */
 
 :root {
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --section-space: var(--space-16);
   --accent: #1f6fd8;
   --accent-dark: #175bb5;
   --accent-soft: #e9f1fc;
@@ -68,7 +76,7 @@ a:focus-visible, .button:focus-visible, summary:focus-visible {
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(226, 230, 234, 0.9);
 }
-.nav-inner { height: 66px; display: flex; align-items: center; justify-content: space-between; }
+.nav-inner { min-height: 66px; padding-block: 10px; gap: var(--space-6); display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; font-size: 18px; }
 .brand-mark {
   width: 34px; height: 34px; border-radius: 9px;
@@ -105,13 +113,14 @@ a:focus-visible, .button:focus-visible, summary:focus-visible {
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 .button:hover { transform: translateY(-2px); }
+.button[aria-disabled="true"] { opacity: .55; pointer-events: none; box-shadow: none; }
 .button-primary { color: #fff; background: var(--accent); box-shadow: 0 12px 26px rgba(31, 111, 216, 0.30); }
 .button-primary:hover { background: var(--accent-dark); }
 .button-secondary { color: var(--ink); background: #fff; border: 1px solid var(--line); }
 
 /* ---- hero ---- */
-.hero { padding: 70px 0 46px; }
-.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 48px; }
+.hero { padding: var(--space-16) 0 var(--space-8); }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: var(--space-8); }
 .hero-grid > * { min-width: 0; }
 .badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -126,18 +135,19 @@ h1 span { color: var(--accent-dark); }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 30px; }
 .privacy-line { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 22px; color: var(--muted); font-size: 13.5px; font-weight: 500; }
 .privacy-line span { display: inline-flex; align-items: center; gap: 6px; }
+.privacy-line .hl-price { color: var(--accent-dark); font-weight: 700; }
 
 /* ---- phone card ---- */
 .phone-card {
   position: relative; background: var(--white); border: 1px solid var(--line);
   border-radius: 34px; padding: 20px; box-shadow: var(--shadow);
-  max-width: 420px; margin-inline-start: auto;
+  width: min(420px, 100%); margin-inline-start: auto;
 }
 .phone-screen { border-radius: 26px; background: linear-gradient(180deg, #ffffff, #f6f7f9); padding: 20px; border: 1px solid var(--line); }
-.screen-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.screen-header { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; justify-content: space-between; margin-bottom: var(--space-4); }
 .dash-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-dark); font-weight: 700; font-size: 12.5px; }
 .mini-meta { color: var(--muted); font-size: 12.5px; font-weight: 600; }
-.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
 .stat { border-radius: 16px; background: #fff; border: 1px solid var(--line); padding: 13px 14px; }
 .stat-label { font-size: 11.5px; color: var(--muted); font-weight: 600; letter-spacing: 0.02em; }
 .stat-value { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: -0.03em; margin-top: 3px; }
@@ -145,8 +155,9 @@ h1 span { color: var(--accent-dark); }
 .attention { margin-top: 14px; border-radius: 18px; background: #0c1218; color: #fff; padding: 15px 16px; }
 .attention h3 { font-size: 13px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
 .attention-row { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.12); padding: 9px 0; font-size: 12px; color: rgba(255,255,255,0.72); }
+.attention-row > * { min-width: 0; overflow-wrap: anywhere; }
 .attention-row:first-of-type { border-top: 0; }
-.attention-row strong { color: #fff; font-weight: 600; white-space: nowrap; }
+.attention-row strong { color: #fff; font-weight: 600; white-space: normal; }
 .store-strip {
   margin-top: 14px; display: flex; align-items: center; gap: 11px;
   background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px;
@@ -156,11 +167,12 @@ h1 span { color: var(--accent-dark); }
 .store-strip strong { color: var(--ink); font-weight: 600; }
 
 /* ---- sections ---- */
-.section { padding: 70px 0; }
+.section { padding: var(--section-space) 0; }
+.section + .section { padding-top: 0; }
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 34px; }
 .section-head h2 { font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; letter-spacing: -0.04em; font-weight: 800; }
 .section-head p { color: var(--muted); font-size: 16.5px; margin-top: 11px; }
-.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
 .feature { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
 .feature-icon { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); font-size: 21px; margin-bottom: 16px; }
 .feature h3 { font-size: 17.5px; margin-bottom: 7px; letter-spacing: -0.02em; font-weight: 700; }
@@ -195,7 +207,8 @@ h1 span { color: var(--accent-dark); }
 .page-header h1 { font-size: clamp(28px, 5vw, 34px); font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
 .page-header p { font-size: 15.5px; color: rgba(255,255,255,0.82); max-width: 60ch; margin-inline: auto; }
 
-.content { max-width: 760px; margin: 0 auto; padding: 46px 24px 80px; }
+.content { overflow-wrap: anywhere; max-width: 760px; margin: 0 auto; padding: 46px 24px 80px; }
+.content--support { max-width: none; padding-bottom: 60px; }
 .content .updated { font-size: 13px; color: var(--muted); margin-bottom: 30px; }
 
 .tl-dr { background: #fff; border: 1px solid var(--line); border-inline-start: 3px solid var(--accent); border-radius: 12px; padding: 20px 24px; margin-bottom: 40px; }
@@ -217,7 +230,7 @@ h1 span { color: var(--accent-dark); }
 .contact-card h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 4px; }
 .contact-card p { font-size: 14.5px; color: var(--muted); }
 .contact-card .links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
-.contact-card a { display: inline-flex; align-items: center; background: var(--accent); color: #fff; font-weight: 600; font-size: 13.5px; padding: 9px 18px; border-radius: 50px; }
+.contact-card a { max-width: 100%; overflow-wrap: anywhere; display: inline-flex; align-items: center; background: var(--accent); color: #fff; font-weight: 600; font-size: 13.5px; padding: 9px 18px; border-radius: 50px; }
 .contact-card a.ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
 .contact-card a:hover { background: var(--accent-dark); }
 .contact-card a.ghost:hover { background: #f4f5f7; }
@@ -248,20 +261,31 @@ footer.site .footer-links a:hover { color: var(--accent); }
 
 /* ---- responsive ---- */
 @media (max-width: 900px) {
+  .nav-links { flex-wrap: wrap; gap: var(--space-3) var(--space-4); }
   .hero-grid, .privacy-panel { grid-template-columns: minmax(0, 1fr); }
   .phone-card { margin: 0 auto; }
   .feature-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
+  :root { --section-space: var(--space-12); }
   .wrap { width: calc(100% - 28px); }
-  .nav-inner { height: auto; padding: 13px 0; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .nav-inner { position: relative; height: auto; padding: 13px 0; flex-direction: column; align-items: flex-start; gap: 12px; }
   .nav-links { flex-wrap: wrap; gap: 14px 18px; }
-  .lang-switch { margin-inline-start: 0; padding-inline-start: 0; border-inline-start: 0; }
-  .lang-menu { inset-inline-end: auto; inset-inline-start: 0; }
-  .hero { padding-top: 46px; }
+  .lang-switch { position: static; margin-inline-start: 0; padding-inline-start: 0; border-inline-start: 0; }
+  .lang-menu { inset-inline: 0; top: calc(100% + 8px); min-width: 0; }
+  .hero { padding-top: var(--space-8); }
+  .hero-grid { gap: var(--space-6); }
   .actions { flex-direction: column; align-items: stretch; }
   .button { width: 100%; }
-  .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: minmax(0, 1fr); }
+  .phone-card { padding: var(--space-3); border-radius: 28px; }
+  .phone-screen { padding: var(--space-4); border-radius: 20px; }
+  .stat { padding: var(--space-3); overflow-wrap: anywhere; }
+  .privacy-panel, .cta { padding: var(--space-6); border-radius: 24px; }
+  .content { padding: var(--space-8) var(--space-4) var(--space-12); }
+  .content--support { padding-bottom: var(--space-12); }
+  .contact-card { padding: var(--space-6) var(--space-4); }
+  .page-header { padding: var(--space-8) var(--space-4); }
 }
 
   </style>
@@ -309,7 +333,7 @@ footer.site .footer-links a:hover { color: var(--accent); }
     </ul>
   </div>
   <h2>١. من نحن</h2>
-  <p>‏MTIS (نظام جرد أدوات الميكانيكي، “التطبيق”) تطوّره وتنشره BARAKAH TECHNOLOGIES, INC. للأسئلة حول هذه السياسة، راسل <a href="mailto:support@barakahtechnologies.net">support@barakahtechnologies.net</a>.</p>
+  <p>‏MTIS (نظام جرد أدوات الميكانيكي، “التطبيق”) تطوّره وتنشره BARAKAH TECHNOLOGIES, INC. للأسئلة حول هذه السياسة، راسل <a href="mailto:mtis-app@proton.me">mtis-app@proton.me</a>.</p>
   <h2>٢. ما البيانات التي يحفظها التطبيق</h2>
   <p>يحفظ MTIS فقط المعلومات التي تُدخلها عن أدواتك ومعداتك. قد تشمل:</p><ul><li><strong>تفاصيل الأداة:</strong> الاسم والعلامة التجارية والطراز والرقم التسلسلي ورقم المخزون والفئة والفئة الفرعية والمقاس والخامة ونطاق العزم والكمية والحالة والموقع والمورّد وتاريخ الشراء والتكلفة وقيمة الاستبدال وتواريخ الضمان والمعايرة وفترة الفحص والملاحظات</li><li><strong>الصور</strong> التي ترفقها بأداة، من الكاميرا أو مكتبة الصور، وتصنيف اختياري لكل صورة (لوحة الرقم التسلسلي، إيصال، صورة الحالة، وغيرها)</li><li><strong>سجلات الإعارة:</strong> إذا أعرتَ أداة، الاسم الذي تكتبه للمستعير وتاريخا الإعارة والإرجاع</li><li><strong>سجل الأداة:</strong> سجل على الجهاز لعمليات فحص الأدراج وتغييرات الحالة والإعارات، لكل منها تاريخ وملاحظة أو صورة اختيارية</li><li><strong>سجلات الصيانة:</strong> تاريخ الخدمة والوصف والتكلفة</li><li><strong>صناديق الأدوات:</strong> الاسم والنوع والعلامة التجارية ورمز المنتج والتكلفة وتاريخ الشراء وطريقة تداخلها</li><li><strong>تفضيلات التطبيق:</strong> اختيار اللغة والمظهر وإعداد القفل وترتيب الفرز وخيارات مشابهة</li></ul><p>كل هذا تُدخله أنت ويبقى بالكامل تحت سيطرتك. اسم المستعير نص حر تختار كتابته؛ وإذا كنت تفضّل عدم تسجيل اسم شخص، فاستخدم الأحرف الأولى أو تصنيفاً بدلاً من ذلك.</p>
   <h2>٣. أين تُحفظ البيانات</h2>
@@ -337,7 +361,7 @@ footer.site .footer-links a:hover { color: var(--accent); }
   <h2>١٤. التغييرات على هذه السياسة</h2>
   <p>إذا أجرينا تغييرات جوهرية، فسنحدّث التاريخ أعلى هذه الصفحة. السياسة الحالية متاحة دائماً على هذا الرابط.</p>
   <h2>١٥. التواصل</h2>
-  <p>أسئلة أو مخاوف بشأن الخصوصية؟ راسل <a href="mailto:support@barakahtechnologies.net">support@barakahtechnologies.net</a>.</p>
+  <p>أسئلة أو مخاوف بشأن الخصوصية؟ راسل <a href="mailto:mtis-app@proton.me">mtis-app@proton.me</a>.</p>
 </div>
   <footer class="site">
     <div class="wrap footer-inner">

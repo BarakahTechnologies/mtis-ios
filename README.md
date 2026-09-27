@@ -48,6 +48,6 @@ MTIS tracks tools, photos, serial and stock numbers, warranty and calibration da
 history, toolboxes, and inventory value. Data stays on the device. The app has no account, server,
 advertising, analytics, or tracking.
 
-**Contact:** support@barakahtechnologies.net
+**Contact:** mtis-app@proton.me
 
 **© 2026 BARAKAH TECHNOLOGIES, INC.**

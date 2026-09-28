@@ -32,6 +32,8 @@ UI = {
 
 PAGES = ["index", "privacy", "support"]
 
+HOME_LABELS = {'en': 'Home', 'ar': 'الرئيسية', 'es': 'Inicio', 'fr': 'Accueil', 'tr': 'Ana sayfa'}
+
 def fname(page, lang):
     return f"{page}.html" if lang == "en" else f"{page}.{lang}.html"
 
@@ -57,13 +59,11 @@ def head(page, lang, title, desc):
   <link rel="canonical" href="{BASE}/{fname(page, lang)}" />
   <title>{title}</title>
 {alts}
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
 {SITE_CSS}
   </style>
-  <link rel="stylesheet" href="assets/family.css?v=20260927-refinement" />
+  <link rel="stylesheet" href="assets/family.css?v=20260927-home" />
+  <link rel="stylesheet" href="assets/design-system.css?v=20260927-shared">
 </head>
 <body>"""
 
@@ -85,6 +85,7 @@ def nav(page, lang, home_anchor=True):
         <span>MTIS</span>
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
+        <a class="home-button" href="https://barakahtechnologies.net/{fname("index", lang)}" aria-label="Barakah Technologies — {HOME_LABELS[lang]}">{HOME_LABELS[lang]}</a>
         <a href="{feat}">{u['nav_features']}</a>
         <a href="{priv}">{u['nav_privacy']}</a>
         <a href="{fname('support', lang)}">{u['nav_support']}</a>

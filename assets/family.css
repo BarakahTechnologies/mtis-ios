@@ -21,3 +21,16 @@ footer a { display: inline-block; }
 .desktop-preview .timeline { border-radius: 8px; margin-top: 16px; }
 .preview-caption { padding: 10px 16px; border-top: 1px solid var(--line); color: #52646e; font-size: 12px; text-align: center; }
 @media (max-width: 640px) { .hero h1 { font-size: clamp(32px, 9vw, 42px); line-height: 1.12; } .section-head { padding-top: 20px; } .desktop-preview .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .desktop-preview .phone-screen { padding: 16px; } }
+
+/* Explicit return to the corporate homepage. */
+.nav-links > a.home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  white-space: nowrap;
+  text-decoration: none;
+}

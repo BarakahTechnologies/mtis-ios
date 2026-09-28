@@ -232,7 +232,6 @@ def build_index(lang):
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <a class="parent-link" href="https://barakahtechnologies.net/{fname("index", lang)}#products">{ {"en": "All apps", "es": "Todas las apps", "ar": "جميع التطبيقات"}[lang] }</a>
           <div class="badge">{d['badge']}</div>
           <h1>{d['h1_a']} <span>{d['h1_b']}</span></h1>
           <p class="lead">{d['lead']}</p>

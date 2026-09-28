@@ -1,8 +1,4 @@
 /* Shared product-site spacing and controls. */
-.parent-link { display: flex; align-items: center; gap: 8px; width: fit-content; margin-bottom: 16px; color: var(--teal-dark, var(--accent-dark, #185db5)); font-size: 14px; font-weight: 650; }
-.parent-link::before { content: "←"; }
-[dir="rtl"] .parent-link::before { content: "→"; }
-.parent-link:hover { text-decoration: underline; }
 .hero .button, .cta .button { border-radius: 6px; box-shadow: none; }
 .hero .button[aria-disabled="true"], .cta .button[aria-disabled="true"] { border-style: dashed; }
 .feature, .privacy-panel, .cta { border-radius: 12px; }

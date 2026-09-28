@@ -63,13 +63,14 @@ def head(page, lang, title, desc):
   <style>
 {SITE_CSS}
   </style>
+  <link rel="stylesheet" href="assets/family.css?v=20260927-refinement" />
 </head>
 <body>"""
 
 def nav(page, lang, home_anchor=True):
     u = UI[lang]
-    feat = "#features" if page == "index" else "index.html#features"
-    priv = "#privacy" if page == "index" else "index.html#privacy"
+    feat = "#features" if page == "index" else fname("index", lang) + "#features"
+    priv = "#privacy" if page == "index" else fname("index", lang) + "#privacy"
     menu_lines = []
     for l in LANGS:
         current = ' aria-current="page"' if l == lang else ""
@@ -79,7 +80,7 @@ def nav(page, lang, home_anchor=True):
     menu = "\n".join(menu_lines)
     return f"""  <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-label="MTIS home">
+      <a class="brand" href="{fname("index", lang)}" aria-label="MTIS home">
         <img class="brand-mark" src="assets/icon-64.png" alt="MTIS app icon" width="34" height="34" />
         <span>MTIS</span>
       </a>
@@ -104,6 +105,7 @@ def footer(lang):
     <div class="wrap footer-inner">
       <p>{u['copyright']}</p>
       <div class="footer-links">
+        <a href="https://barakahtechnologies.net/{fname("index", lang)}">Barakah Technologies</a>
         <a href="{fname('privacy', lang)}">{u['f_privacy_policy']}</a>
         <a href="{fname('support', lang)}">{u['f_support']}</a>
       </div>
@@ -229,6 +231,7 @@ def build_index(lang):
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
+          <a class="parent-link" href="https://barakahtechnologies.net/{fname("index", lang)}#products">{ {"en": "All apps", "es": "Todas las apps", "ar": "جميع التطبيقات"}[lang] }</a>
           <div class="badge">{d['badge']}</div>
           <h1>{d['h1_a']} <span>{d['h1_b']}</span></h1>
           <p class="lead">{d['lead']}</p>
